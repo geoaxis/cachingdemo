@@ -47,10 +47,20 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-spring -->
     <dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-test</artifactId>
-      <scope>test</scope>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast-spring</artifactId>
+      <version>4.2</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-kubernetes -->
+    <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast-kubernetes</artifactId>
+      <version>2.2.2</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 

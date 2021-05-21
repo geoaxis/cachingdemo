@@ -1,6 +1,5 @@
 package com.hatimonline.spring.cachingdemo;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomerController {
 
-  @Value("${HOSTNAME}")
+  @Value("${HOSTNAME:localhost}")
   private String hostname;
 
   private final CustomerService customerService;

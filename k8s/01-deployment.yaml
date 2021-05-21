@@ -29,3 +29,8 @@ spec:
             httpGet:
               port: 8080
               path: /actuator/health/liveness
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: hazelcast
+              containerPort: 5701
