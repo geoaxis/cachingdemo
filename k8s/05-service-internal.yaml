@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cachingdemointernal-service
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: 5701-5701
+    port: 5701
+    protocol: TCP
+    targetPort: 5701
+  selector:
+    app: cachingdemointernal
+  type: ClusterIP

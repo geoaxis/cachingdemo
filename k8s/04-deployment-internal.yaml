@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cachingdemo
+  name: cachingdemointernal
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: cachingdemo
+      app: cachingdemointernal
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: cachingdemo
+        app: cachingdemointernal
     spec:
       containers:
-        - name: cachingdemo
+        - name: cachingdemointernal
           image: cachingdemo
           env:
             - name: SERVICENAME
-              value: cachingdemo-service
+              value: cachingdemointernal-service
           lifecycle:
             preStop:
               exec:

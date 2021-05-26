@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  app: cachingdemo
 resources:
   - 01-deployment.yaml
   - 02-service.yaml
   - 03-nginx-ingress.yaml
+  - 04-deployment-internal.yaml
+  - 05-service-internal.yaml
