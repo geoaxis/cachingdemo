@@ -10,7 +10,9 @@ import org.springframework.cache.annotation.EnableCaching;
 public class CachingdemoApplication {
 
   public static void main(String[] args) {
-    ElasticApmAttacher.attach();
+    if(System.getenv("KUBERNETES_SERVICE_HOST") != null) {
+      ElasticApmAttacher.attach();
+    }
     SpringApplication.run(CachingdemoApplication.class, args);
   }
 
