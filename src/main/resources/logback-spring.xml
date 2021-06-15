@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <property name="SERVICE_NAME" value="cachingdemo" />
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="co.elastic.logging.logback.EcsEncoder">
-      <serviceName>${SERVICENAME}</serviceName>
-    </encoder>
-  </appender>
 
-  <root level="info">
-    <appender-ref ref="STDOUT"/>
-  </root>
+
+  <property name="SERVICENAME" value="${SERVICENAME:-cachingdemo}" />
+
+  <if condition='property("SERVICENAME").contains("service")'>
+  <then>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="co.elastic.logging.logback.EcsEncoder">
+        <serviceName>${SERVICENAME}</serviceName>
+      </encoder>
+    </appender>
+
+    <root level="INFO">
+      <appender-ref ref="STDOUT"/>
+    </root>
+
+  </then>
+    <else>
+      <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+      <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+      <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+      </root>
+      <logger name="org.springframework.web" level="DEBUG"/>
+    </else>
+  </if>
+
+
 </configuration>

@@ -1,5 +1,7 @@
 package com.hatimonline.spring.cachingdemo;
 
+import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.REMOTE_CUSTOMER_CACHE;
+
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
-@CacheConfig(cacheNames = "remotecustomer")
+@CacheConfig(cacheNames = REMOTE_CUSTOMER_CACHE)
 public class RemoteCustomerService {
 
   private RestTemplate restTemplate;

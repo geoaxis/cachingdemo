@@ -81,6 +81,13 @@
       <version>1.23.0</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.codehaus.janino/janino -->
+    <dependency>
+      <groupId>org.codehaus.janino</groupId>
+      <artifactId>janino</artifactId>
+      <version>3.1.4</version>
+    </dependency>
+
   </dependencies>
 
   <build>

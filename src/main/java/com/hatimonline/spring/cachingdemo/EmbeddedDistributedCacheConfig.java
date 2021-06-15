@@ -1,10 +1,15 @@
 package com.hatimonline.spring.cachingdemo;
 
+import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.CUSTOMER_CACHE;
+import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.REMOTE_CUSTOMER_CACHE;
+import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.createAllConfigs;
+
 import com.hazelcast.config.Config;
 import com.hazelcast.config.EvictionConfig;
 import com.hazelcast.config.EvictionPolicy;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.MaxSizePolicy;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnCloudPlatform;
 import org.springframework.boot.cloud.CloudPlatform;
@@ -13,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConditionalOnCloudPlatform(CloudPlatform.KUBERNETES)
-public class EmbeddedConfig {
+public class EmbeddedDistributedCacheConfig {
 
   @Value("${SERVICENAME:cachingdemo-service}")
   private String serviceName;
@@ -31,18 +36,7 @@ public class EmbeddedConfig {
         .setMaxSizePolicy(MaxSizePolicy.USED_HEAP_PERCENTAGE)
         .setEvictionPolicy(EvictionPolicy.LFU);
 
-    MapConfig customerConfig = new MapConfig()
-        .setTimeToLiveSeconds( 60 )
-        .setEvictionConfig(evictionConfig);
-
-
-    config.getMapConfigs().put("customer", customerConfig);
-
-    MapConfig remoteCustomerConfig = new MapConfig()
-        .setTimeToLiveSeconds( 10 )
-        .setEvictionConfig(evictionConfig);
-
-    config.getMapConfigs().put("remotecustomer", remoteCustomerConfig);
+    config.getMapConfigs().putAll(createAllConfigs(evictionConfig));
 
     return config;
   }

@@ -1,5 +1,7 @@
 package com.hatimonline.spring.cachingdemo;
 
+import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.CUSTOMER_CACHE;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
-@CacheConfig(cacheNames = "customer")
+@CacheConfig(cacheNames = CUSTOMER_CACHE)
 @Slf4j
 public class CustomerService {
 
@@ -26,7 +28,7 @@ public class CustomerService {
   @Cacheable(key = "#id")
   public Optional<Customer> getCustomerById(long id)
      throws InterruptedException {
-    log.info("No cache found for  customer. Doing expensive 3 sec operation and then filtering customer");
+    log.info("No cache found for  customer {}. Doing expensive 3 sec operation and then filtering results.", id);
     var cutomer = customerList.stream()
           .filter(c -> c.id.compareTo(id) == 0)
           .map(c -> c.toBuilder().lastUpdated(LocalDateTime.now()).build())

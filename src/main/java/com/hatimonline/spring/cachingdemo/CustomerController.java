@@ -27,7 +27,7 @@ public class CustomerController {
       throws InterruptedException {
     HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.set("x-pod-hostname", hostname);
-    log.info("Fetching customer (from Cache or real)");
+    log.info("Fetching customer");
     Optional<Customer> customerOptional = customerService.getCustomerById(id);
 
     return customerOptional.map(customer -> ResponseEntity
