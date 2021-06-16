@@ -1,5 +1,7 @@
-package com.hatimonline.spring.cachingdemo;
+package com.hatimonline.spring.cachingdemo.resource;
 
+import com.hatimonline.spring.cachingdemo.resource.dto.Customer;
+import com.hatimonline.spring.cachingdemo.service.CustomerService;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,29 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-public class RemoteCustomerController {
-
-  private RemoteCustomerService remoteCustomerService;
+public class CustomerController {
 
   @Value("${HOSTNAME:localhost}")
   private String hostname;
 
-  RemoteCustomerController(RemoteCustomerService remoteCustomerService) {
-    this.remoteCustomerService = remoteCustomerService;
+  private final CustomerService customerService;
+
+  CustomerController(CustomerService customerService) {
+    this.customerService = customerService;
   }
 
-  @GetMapping("/remotecustomer/{id}")
-  public ResponseEntity<Customer> callExternalServiceByName(@PathVariable("id") Long id)
+  @GetMapping("/customer/{id}")
+  public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id)
       throws InterruptedException {
-    log.info("Fetching remote customer (from Cache or real)");
     HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.set("x-pod-hostname", hostname);
-
-    Optional<Customer> customerOptional = remoteCustomerService.getRemoteCustomer(id);
+    log.info("Fetching customer");
+    Optional<Customer> customerOptional = customerService.getCustomerById(id);
 
     return customerOptional.map(customer -> ResponseEntity
         .ok().headers(responseHeaders).body(customer))
         .orElseGet(() -> ResponseEntity.notFound().headers(responseHeaders).build());
-
   }
 }

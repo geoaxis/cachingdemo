@@ -1,4 +1,4 @@
-package com.hatimonline.spring.cachingdemo;
+package com.hatimonline.spring.cachingdemo.resource.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

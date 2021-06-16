@@ -1,4 +1,4 @@
-package com.hatimonline.spring.cachingdemo;
+package com.hatimonline.spring.cachingdemo.config;
 
 import com.hazelcast.config.EvictionConfig;
 import com.hazelcast.config.MapConfig;
@@ -10,7 +10,7 @@ public class CommonCacheConfig {
 
   public static Map<String, MapConfig> createAllConfigs(EvictionConfig evictionConfig) {
     return Map.of(
-        CUSTOMER_CACHE, createConfig(evictionConfig, 60),
+        CUSTOMER_CACHE, createConfig(evictionConfig, 10),
         REMOTE_CUSTOMER_CACHE, createConfig(evictionConfig, 10)
     );
   }

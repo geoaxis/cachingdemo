@@ -1,15 +1,11 @@
-package com.hatimonline.spring.cachingdemo;
+package com.hatimonline.spring.cachingdemo.config;
 
-import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.CUSTOMER_CACHE;
-import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.REMOTE_CUSTOMER_CACHE;
-import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.createAllConfigs;
+import static com.hatimonline.spring.cachingdemo.config.CommonCacheConfig.createAllConfigs;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.EvictionConfig;
 import com.hazelcast.config.EvictionPolicy;
-import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.MaxSizePolicy;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnCloudPlatform;
 import org.springframework.boot.cloud.CloudPlatform;

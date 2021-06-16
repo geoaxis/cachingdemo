@@ -1,13 +1,15 @@
-package com.hatimonline.spring.cachingdemo;
+package com.hatimonline.spring.cachingdemo.service;
 
-import static com.hatimonline.spring.cachingdemo.CommonCacheConfig.CUSTOMER_CACHE;
+import static com.hatimonline.spring.cachingdemo.config.CommonCacheConfig.CUSTOMER_CACHE;
 
-import java.time.LocalDateTime;
+import com.hatimonline.spring.cachingdemo.CustomerRepository;
+import com.hatimonline.spring.cachingdemo.resource.dto.Customer;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,7 +18,10 @@ import org.springframework.stereotype.Service;
 @Service
 @CacheConfig(cacheNames = CUSTOMER_CACHE)
 @Slf4j
+@RequiredArgsConstructor
 public class CustomerService {
+
+  private final CustomerRepository customerRepository;
 
   final List<Customer> customerList =
       LongStream.rangeClosed(1,100).boxed()
@@ -29,11 +34,7 @@ public class CustomerService {
   public Optional<Customer> getCustomerById(long id)
      throws InterruptedException {
     log.info("No cache found for  customer {}. Doing expensive 3 sec operation and then filtering results.", id);
-    var cutomer = customerList.stream()
-          .filter(c -> c.id.compareTo(id) == 0)
-          .map(c -> c.toBuilder().lastUpdated(LocalDateTime.now()).build())
-          .findAny();
     TimeUnit.SECONDS.sleep(3);
-      return cutomer;
+      return customerRepository.findById(id);
   }
 }
