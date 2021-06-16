@@ -33,6 +33,15 @@ spec:
               value: http://apmdev-apm-http.devoops.svc.cluster.local:8200
             - name:  ELASTIC_APM_SECRET_TOKEN
               value: "devoops!"
+            - name: SPRING_REDIS_HOST
+              value: redis-master.default.svc.cluster.local
+            - name: SPRING_REDIS_PORT
+              value: "6379"
+            - name: SPRING_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: redis-password
           lifecycle:
             preStop:
               exec:
